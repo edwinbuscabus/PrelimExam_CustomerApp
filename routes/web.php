@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\SiteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,4 +32,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', [CustomerController::class, 'index']);
     Route::get('/edit/{customer}', [CustomerController::class, 'edit']);
     Route::get('/delete/{customer}', [CustomerController::class, 'destroy']);
+
+
+    Route::get('/logs',[SiteController::class, 'index']);
+    Route::get('/logs', [SiteController::class, 'logs'])->name('logs');
+
 });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Customers;
 
+use App\Events\UserLog;
 use Livewire\Component;
 use App\Models\Customer;
 
@@ -32,6 +33,9 @@ class Edit extends Component
             'address'           => $this->address,
             'contact_number'    => $this->contact_number
         ]);
+
+        $log_entry = 'Edit Customer: "' . $this->customer->name . '" with an ID: ' . $this->customer->id;
+        event(new UserLog($log_entry));
 
         return redirect('/dashboard')->with('message',' Updated successfully');
     }

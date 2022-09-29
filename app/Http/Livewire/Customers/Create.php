@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire\Customers;
 
+use App\Events\UserLog;
 use Livewire\Component;
+use App\Events\UserEvent;
 use App\Models\Customer;
 
 class Create extends Component
@@ -27,7 +29,10 @@ class Create extends Component
                 'contact_number'    => $this->contact_number
             ]);
 
-            return redirect('/')->with('message', $this->name . ' added successfully');
+            $log_entry = 'Added Customer "' . $this->name;
+            event(new UserLog($log_entry));
+
+            return redirect('/dashboard')->with('message', $this->name . ' added successfully');
     }
 
     public function updated($propertyEmail)

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Customers;
 
+use App\Events\UserLog;
 use Livewire\Component;
 use App\Models\Customer;
 
@@ -16,7 +17,10 @@ class Delete extends Component
     public function delete() {
         $this->customer->delete();
 
-        return redirect('/')->with('message', ' Deleted successfully');
+        $log_entry = 'Delete Customer: "' . $this->customer->name . '" with an ID: ' . $this->customer->id;
+        event(new UserLog($log_entry));
+
+        return redirect('/dashboard')->with('message', ' Deleted successfully');
     }
 
     public function back() {
